@@ -1,8 +1,8 @@
 /* This file has been created on filesystem by @workspace/testing#createTestSetup */
 import { useQuery, gql } from "@apollo/client";
 
-const Account_DataDoc = gql(`
-query Account_Data {
+const Account_dataDoc = gql(`
+query Account_data {
   me {
     id
     name
@@ -12,7 +12,7 @@ query Account_Data {
 
 export const AccountDataMultilineComponent = () => {
   const { loading, error, data, fetchMore, networkStatus } =
-    useQuery(Account_DataDoc, {
+    useQuery(Account_dataDoc, {
       variables: {
         inTimeline: true,
       },

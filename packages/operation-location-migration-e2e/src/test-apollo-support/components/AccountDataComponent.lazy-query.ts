@@ -1,8 +1,8 @@
 /* This file has been created on filesystem by @workspace/testing#createTestSetup */
 import { useLazyQuery, gql } from "@apollo/client";
 
-const Account_DataDoc = gql(`
-query Account_Data {
+const Account_dataDoc = gql(`
+query Account_data {
   me {
     id
     name
@@ -11,6 +11,6 @@ query Account_Data {
 `);
 
 export const AccountDataComponent = () => {
-  useLazyQuery(Account_DataDoc);
+  useLazyQuery(Account_dataDoc);
   return 'AccountData';
 };

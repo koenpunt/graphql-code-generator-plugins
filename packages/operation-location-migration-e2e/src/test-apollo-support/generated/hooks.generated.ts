@@ -64,6 +64,11 @@ export type Account_DataQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type Account_DataQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, name: string } | null };
 
+export type Account_DataQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type Account_DataQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, name: string } | null };
+
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -97,6 +102,46 @@ export const UserFragmentFragmentDoc = gql`
     `;
 export const Account_DataDocument = gql`
     query Account_Data {
+  me {
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __useAccount_DataQuery__
+ *
+ * To run a query within a React component, call `useAccount_DataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAccount_DataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAccount_DataQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAccount_DataQuery(baseOptions?: Apollo.QueryHookOptions<Account_DataQuery, Account_DataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<Account_DataQuery, Account_DataQueryVariables>(Account_DataDocument, options);
+      }
+export function useAccount_DataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Account_DataQuery, Account_DataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<Account_DataQuery, Account_DataQueryVariables>(Account_DataDocument, options);
+        }
+export function useAccount_DataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<Account_DataQuery, Account_DataQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<Account_DataQuery, Account_DataQueryVariables>(Account_DataDocument, options);
+        }
+export type Account_DataQueryHookResult = ReturnType<typeof useAccount_DataQuery>;
+export type Account_DataLazyQueryHookResult = ReturnType<typeof useAccount_DataLazyQuery>;
+export type Account_DataSuspenseQueryHookResult = ReturnType<typeof useAccount_DataSuspenseQuery>;
+export type Account_DataQueryResult = Apollo.QueryResult<Account_DataQuery, Account_DataQueryVariables>;
+export const Account_DataDocument = gql`
+    query Account_data {
   me {
     id
     name

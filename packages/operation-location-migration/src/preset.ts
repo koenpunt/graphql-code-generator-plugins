@@ -23,6 +23,18 @@ import type { TypedPresetConfig } from './config';
 
 const presetName = '@eddeee888/operation-location-migration';
 
+/**
+ * Capitalizes the first letter of each underscore-separated segment.
+ * This matches the behavior of GraphQL Code Generator's typescript-react-apollo plugin.
+ * Example: "Account_data" -> "Account_Data"
+ */
+const capitalizeSegments = (name: string): string => {
+  return name
+    .split('_')
+    .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
+    .join('_');
+};
+
 export const preset: Types.OutputPreset<TypedPresetConfig> = {
   buildGeneratesSection: async ({
     baseOutputDir,
@@ -83,9 +95,10 @@ export const preset: Types.OutputPreset<TypedPresetConfig> = {
 
       visit(documentFile.document, {
         FragmentDefinition(node) {
+          const fragmentName = node.name.value;
           nearOperationFilesToCreate[nearOperationDocFilename] ||= [];
           nearOperationFilesToCreate[nearOperationDocFilename].push({
-            documentNodeName: `${node.name.value}Doc`,
+            documentNodeName: `${fragmentName}Doc`,
             documentSDL: print(node),
           });
         },
@@ -99,6 +112,8 @@ export const preset: Types.OutputPreset<TypedPresetConfig> = {
           }
 
           const operationName = node.name.value;
+          // GraphQL Code Generator capitalizes first letter of each underscore-separated segment
+          const hookOperationName = capitalizeSegments(operationName);
           const documentNodeName = `${operationName}Doc`;
           const documentSDL = print(node);
 
@@ -115,7 +130,7 @@ export const preset: Types.OutputPreset<TypedPresetConfig> = {
 
           if (node.operation === OperationTypeNode.QUERY) {
             // Query
-            const queryHookName = `use${operationName}Query`;
+            const queryHookName = `use${hookOperationName}Query`;
             hooksToReplace[queryHookName] = {
               hookName: queryHookName,
               hookType: 'useQuery',
@@ -124,7 +139,7 @@ export const preset: Types.OutputPreset<TypedPresetConfig> = {
               documentSDL,
             };
 
-            const lazyHookName = `use${node.name.value}LazyQuery`;
+            const lazyHookName = `use${hookOperationName}LazyQuery`;
             hooksToReplace[lazyHookName] = {
               hookName: lazyHookName,
               hookType: 'useLazyQuery',
@@ -133,7 +148,7 @@ export const preset: Types.OutputPreset<TypedPresetConfig> = {
               documentSDL,
             };
 
-            const suspenseHookName = `use${node.name.value}SuspenseQuery`;
+            const suspenseHookName = `use${hookOperationName}SuspenseQuery`;
             hooksToReplace[suspenseHookName] = {
               hookName: suspenseHookName,
               hookType: 'useSuspenseQuery',
@@ -143,7 +158,7 @@ export const preset: Types.OutputPreset<TypedPresetConfig> = {
             };
           } else {
             // Mutation & Subscription
-            const hookName = `use${node.name.value}${pascalCase(
+            const hookName = `use${hookOperationName}${pascalCase(
               node.operation
             )}`;
             hooksToReplace[hookName] = {

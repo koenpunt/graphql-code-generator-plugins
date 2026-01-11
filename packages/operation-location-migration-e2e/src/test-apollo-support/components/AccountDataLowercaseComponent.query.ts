@@ -10,7 +10,7 @@ query Account_data {
 }
 `);
 
-export const AccountDataComponent = () => {
+export const AccountDataLowercaseComponent = () => {
   useQuery(Account_dataDoc);
-  return 'AccountData';
+  return 'AccountDataLowercase';
 };

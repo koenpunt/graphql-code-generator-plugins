@@ -92,5 +92,14 @@ export const AccountDataMultilineComponent = () => {
   return 'AccountData';
 };\n`,
     },
+    {
+      file: 'components/AccountDataLowercaseComponent.query.ts',
+      content: `import { useAccount_DataQuery } from '../generated/hooks.generated';
+
+export const AccountDataLowercaseComponent = () => {
+  useAccount_DataQuery();
+  return 'AccountDataLowercase';
+};\n`,
+    },
   ],
 });

@@ -49,5 +49,32 @@ export const UserSubscription = () => {
   useUserChangesSubscription({});
 };\n`,
     },
+    {
+      file: 'components/AccountDataComponent.query.ts',
+      content: `import { useAccount_DataQuery } from '../generated/hooks.generated';
+
+export const AccountDataComponent = () => {
+  useAccount_DataQuery();
+  return 'AccountData';
+};\n`,
+    },
+    {
+      file: 'components/AccountDataComponent.lazy-query.ts',
+      content: `import { useAccount_DataLazyQuery } from '../generated/hooks.generated';
+
+export const AccountDataComponent = () => {
+  useAccount_DataLazyQuery();
+  return 'AccountData';
+};\n`,
+    },
+    {
+      file: 'components/AccountDataComponent.suspense-query.ts',
+      content: `import { useAccount_DataSuspenseQuery } from '../generated/hooks.generated';
+
+export const AccountDataComponent = () => {
+  useAccount_DataSuspenseQuery();
+  return 'AccountData';
+};\n`,
+    },
   ],
 });

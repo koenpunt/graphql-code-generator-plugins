@@ -1,0 +1,6 @@
+query Account_Data {
+  me {
+    id
+    name
+  }
+}

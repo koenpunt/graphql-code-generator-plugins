@@ -85,7 +85,7 @@ export const preset: Types.OutputPreset<TypedPresetConfig> = {
         FragmentDefinition(node) {
           nearOperationFilesToCreate[nearOperationDocFilename] ||= [];
           nearOperationFilesToCreate[nearOperationDocFilename].push({
-            documentNodeName: `${pascalCase(node.name.value)}Doc`,
+            documentNodeName: `${node.name.value}Doc`,
             documentSDL: print(node),
           });
         },
@@ -98,7 +98,7 @@ export const preset: Types.OutputPreset<TypedPresetConfig> = {
             return;
           }
 
-          const operationName = pascalCase(node.name.value);
+          const operationName = node.name.value;
           const documentNodeName = `${operationName}Doc`;
           const documentSDL = print(node);
 
@@ -124,7 +124,7 @@ export const preset: Types.OutputPreset<TypedPresetConfig> = {
               documentSDL,
             };
 
-            const lazyHookName = `use${pascalCase(node.name.value)}LazyQuery`;
+            const lazyHookName = `use${node.name.value}LazyQuery`;
             hooksToReplace[lazyHookName] = {
               hookName: lazyHookName,
               hookType: 'useLazyQuery',
@@ -133,9 +133,7 @@ export const preset: Types.OutputPreset<TypedPresetConfig> = {
               documentSDL,
             };
 
-            const suspenseHookName = `use${pascalCase(
-              node.name.value
-            )}SuspenseQuery`;
+            const suspenseHookName = `use${node.name.value}SuspenseQuery`;
             hooksToReplace[suspenseHookName] = {
               hookName: suspenseHookName,
               hookType: 'useSuspenseQuery',
@@ -145,7 +143,7 @@ export const preset: Types.OutputPreset<TypedPresetConfig> = {
             };
           } else {
             // Mutation & Subscription
-            const hookName = `use${pascalCase(node.name.value)}${pascalCase(
+            const hookName = `use${node.name.value}${pascalCase(
               node.operation
             )}`;
             hooksToReplace[hookName] = {

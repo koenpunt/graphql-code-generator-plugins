@@ -218,9 +218,10 @@ export const preset: Types.OutputPreset<TypedPresetConfig> = {
       tsSourceFile
         .getDescendantsOfKind(SyntaxKind.CallExpression)
         .forEach((callExpression) => {
-          const calledFunctionName = callExpression
-            .getFirstDescendantByKind(SyntaxKind.Identifier)
-            ?.getText();
+          const expression = callExpression.getExpression();
+          const calledFunctionName = Node.isIdentifier(expression)
+            ? expression.getText()
+            : undefined;
 
           if (!calledFunctionName) {
             return;
@@ -279,9 +280,10 @@ export const preset: Types.OutputPreset<TypedPresetConfig> = {
               hooksToReplace[functionToReplace.importSpecifierNode.getName()];
             const { documentNodeName } = graphqlDocument;
 
-            functionToReplace.callExpression
-              .getFirstDescendantByKindOrThrow(SyntaxKind.Identifier)
-              .replaceWithText(graphqlDocument.hookType);
+            const expression = functionToReplace.callExpression.getExpression();
+            if (Node.isIdentifier(expression)) {
+              expression.replaceWithText(graphqlDocument.hookType);
+            }
             functionToReplace.callExpression.insertArgument(
               0,
               documentNodeName

@@ -76,5 +76,21 @@ export const AccountDataComponent = () => {
   return 'AccountData';
 };\n`,
     },
+    {
+      file: 'components/AccountDataComponent.multiline.ts',
+      content: `import { useAccount_DataQuery } from '../generated/hooks.generated';
+
+export const AccountDataMultilineComponent = () => {
+  const { loading, error, data, fetchMore, networkStatus } =
+    useAccount_DataQuery({
+      variables: {
+        inTimeline: true,
+      },
+      fetchPolicy: 'cache-and-network',
+    });
+  
+  return 'AccountData';
+};\n`,
+    },
   ],
 });

@@ -49,5 +49,57 @@ export const UserSubscription = () => {
   useUserChangesSubscription({});
 };\n`,
     },
+    {
+      file: 'components/AccountDataComponent.query.ts',
+      content: `import { useAccount_DataQuery } from '../generated/hooks.generated';
+
+export const AccountDataComponent = () => {
+  useAccount_DataQuery();
+  return 'AccountData';
+};\n`,
+    },
+    {
+      file: 'components/AccountDataComponent.lazy-query.ts',
+      content: `import { useAccount_DataLazyQuery } from '../generated/hooks.generated';
+
+export const AccountDataComponent = () => {
+  useAccount_DataLazyQuery();
+  return 'AccountData';
+};\n`,
+    },
+    {
+      file: 'components/AccountDataComponent.suspense-query.ts',
+      content: `import { useAccount_DataSuspenseQuery } from '../generated/hooks.generated';
+
+export const AccountDataComponent = () => {
+  useAccount_DataSuspenseQuery();
+  return 'AccountData';
+};\n`,
+    },
+    {
+      file: 'components/AccountDataComponent.multiline.ts',
+      content: `import { useAccount_DataQuery } from '../generated/hooks.generated';
+
+export const AccountDataMultilineComponent = () => {
+  const { loading, error, data, fetchMore, networkStatus } =
+    useAccount_DataQuery({
+      variables: {
+        inTimeline: true,
+      },
+      fetchPolicy: 'cache-and-network',
+    });
+  
+  return 'AccountData';
+};\n`,
+    },
+    {
+      file: 'components/AccountDataLowercaseComponent.query.ts',
+      content: `import { useAccount_DataQuery } from '../generated/hooks.generated';
+
+export const AccountDataLowercaseComponent = () => {
+  useAccount_DataQuery();
+  return 'AccountDataLowercase';
+};\n`,
+    },
   ],
 });
